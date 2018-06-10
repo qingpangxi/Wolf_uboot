@@ -617,7 +617,6 @@ void LCD_Initialize_NONAME1(void)
 #endif
 
 /*
- */
 void Exynos_LCD_turnon(void)
 {
 	//printf("[mjdbg] turn on the lcd \n");
@@ -665,3 +664,4 @@ void Exynose_LCD_setprogress(int percentage)
 	}
 #endif
 }
+*/

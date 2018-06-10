@@ -1,84 +1,21 @@
 
 #!/bin/bash
-
-# jun.ma@samsung.com
 # This script will create a u-boot binary for movinand/mmc boot
-#
-
-option1="4212"
-option2="4212s"
-option3="4212tz"
-option4="4412"
-option5="4412s"
-option6="4412tz"
 
 chmod 777 sdfuse_q -R
+
+echo "Fuse wolf-4412 trustzone uboot file into SD card"
+
+cd ./sdfuse_q
+
 if [ -z $1 ]
 then
-		split -b 14336 u-boot.bin bl2
-		make -C sdfuse_q/
-		#cp u-boot.bin u-boot-4212.bin
-		#cp u-boot.bin u-boot-4412.bin
-		#./sdfuse_q/add_sign
-		./sdfuse_q/chksum
-		
-		##For Dual-core, non-secure boot
-		
-		cat E4212 checksum_bl2_14k.bin all00_padding.bin u-boot.bin > u-boot-exynos4212-evt0-nonfused.bin
-		
-		##For Quad-core, non-secure boot
-		
-		cat E4412_N.bl1.bin checksum_bl2_14k.bin all00_padding.bin u-boot.bin > u-boot-exynos4412-evt0-nonfused.bin
-		echo u-boot-exynos4212-evt0-nonfused.bin generated for dual core non secure boot,use this one to fuse exyons 4212.
-		echo Please use sd_fusing.sh in sdfuse directory with su permission for programming the u-boot to SD card. Ex: ./sd_fusing.sh /dev/sdd
-		echo
-		echo u-boot-exynos4412-evt0-nonfused.bin generated for Quad core non secure boot,use this one to fuse exyons 4412 evt0.
-		echo Please use sd_fusing.sh in sdfuse_q directory with su permission for programming the u-boot to SD card. Ex: ./sd_fusing.sh /dev/sdd
-		echo
-
-		rm bl2a*
-		#rm checksum_bl2*
-		
-elif [ $1 = $option1 ]
-then 
-	echo "Fuse 4212 non-secure uboot file into SD card"
-	cd ./sdfuse_q
-	./sd_fusing_exynos4x12.sh $2 u-boot-exynos4212-evt0-nonfused.bin
-	cd ..
-elif [ $1 = $option2 ]
-then 
-	echo "Fuse 4212 secure uboot file into SD card"
-	cd ./sdfuse_q
-	./sd_fusing_exynos4x12.sh $2 u-boot-exynos4212-evt1-efused.bin
-	cd ..
-elif [ $1 = $option3 ]
-then 
-	echo "Fuse 4212 trustzone uboot file into SD card"
-	cd ./sdfuse_q
-	./sd_fusing_exynos4x12.sh $2 u-boot-exynos4212-evt1-efused-tz.bin
-	cd ..
-elif [ $1 = $option4 ]
-then 
-	echo "Fuse 4412 non-secure uboot file into SD card"
-	cd ./sdfuse_q
-	./sd_fusing_exynos4x12.sh $2 u-boot-exynos4412-evt0-nonfused.bin
-	cd ..
-elif [ $1 = $option5 ]
-then 
-	echo "Fuse 4412 secure uboot file into SD card"
-	cd ./sdfuse_q
-	./sd_fusing_exynos4x12.sh $2 u-boot-exynos4412-evt1-efused.bin 
-	cd ..
-elif [ $1 = $option6 ]
-then 
-	echo "Fuse 4412 trustzone uboot file into SD card"
-	cd ./sdfuse_q
-	./sd_fusing_exynos4x12.sh $2 u-boot-exynos4412-evt1-efused-tz.bin
-	cd ..
+	./sd_fusing_exynos4x12.sh /dev/sdb u-boot-wolf-4412.bin
 else
-	echo ">>>Usage: please refer the manual:"
-    	exit 0
+	./sd_fusing_exynos4x12.sh $1 u-boot-wolf-4412.bin
 fi
+
+cd ..
 
 
 

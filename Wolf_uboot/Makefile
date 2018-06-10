@@ -350,18 +350,6 @@ $(obj)u-boot.bin:	$(obj)u-boot
 		@./sdfuse_q/add_padding
 		@rm bl2a*
 		
-		##For Dual-core, non-secure boot
-		
-		@cat E4212 checksum_bl2_14k.bin all00_padding.bin u-boot.bin > u-boot-exynos4212-evt0-nonfused.bin
-		
-		##For Quad-core, non-secure boot
-		
-		@cat E4412_N.bl1.bin checksum_bl2_14k.bin all00_padding.bin u-boot.bin > u-boot-exynos4412-evt0-nonfused.bin
-		@echo u-boot-exynos4212-evt0-nonfused.bin generated for dual core non secure boot,use this one to fuse exyons 4212.
-		@echo Please use sd_fusing.sh in sdfuse directory with su permission for programming the u-boot to SD card. Ex: ./sd_fusing.sh /dev/sdd
-		@echo
-		@echo u-boot-exynos4412-evt0-nonfused.bin generated for Quad core non secure boot,use this one to fuse exyons 4412 evt0.
-		@echo Please use sd_fusing.sh in sdfuse_q directory with su permission for programming the u-boot to SD card. Ex: ./sd_fusing.sh /dev/sdd
 		@echo
 
 $(obj)u-boot.ldr:	$(obj)u-boot
@@ -3251,7 +3239,7 @@ smdkc210_onenand_config:	unconfig
 smdkc210_android_config:	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa9 smdkc210 samsung s5pc210
 
-tc4_android_config:	unconfig
+wolf_android_config:	unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa9 smdkc210 samsung s5pc210
 
 tc4_plus_android_config:	unconfig
